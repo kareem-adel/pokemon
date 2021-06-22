@@ -77,7 +77,12 @@ function Home () {
           const id = url[url.length - 2]
           return (
             <div key={id}>
-              <Link to={`/${id}`}>{`${id} ${pokemon.name}`}</Link>
+              <Link
+                onMouseOver={async () => {
+                  await actions.preFetchPokemon(id)
+                }}
+                to={`/${id}`}
+              >{`${id} ${pokemon.name}`}</Link>
             </div>
           )
         })}
