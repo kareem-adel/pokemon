@@ -13,7 +13,7 @@ export const api = (() => {
   return {
     async getInitialPokemons () {
       const ret = await caxios({
-        url: `${baseUrl}/pokemon?offset=0&limit=10`,
+        url: `${baseUrl}/pokemon?offset=0&limit=20`,
         method: 'get'
       })
       return ret.data

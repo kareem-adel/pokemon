@@ -14,11 +14,22 @@ function App () {
     <Provider value={overmind}>
       <Router>
         <Switch>
-          <Route path="/" exact >
+          <Route path="/" exact>
             <Home />
           </Route>
-          <Route path="/:id" >
-            <div><Home /><Detail></Detail></div>
+          <Route path="/:id">
+            <div style={{ flexDirection: 'row', display: 'flex' }}>
+              <div
+                style={{
+                  width: '40%'
+                }}
+              >
+                <Home></Home>
+              </div>
+              <div style={{ width: '60%' }}>
+                <Detail></Detail>
+              </div>
+            </div>
           </Route>
         </Switch>
       </Router>

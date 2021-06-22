@@ -6,8 +6,8 @@ import { useState, useActions, useEffects, useReaction } from '../overmind'
 export default function Detail () {
   const { id } = useParams()
   return (
-        <div>
-          <div>{id}</div>
-        </div>
+    <div>
+      <div>{id}</div>
+    </div>
   )
 }
