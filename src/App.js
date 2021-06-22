@@ -1,7 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import logo from './logo.svg'
+import './App.css'
 
-function App() {
+import { createOvermind } from 'overmind'
+import { config } from './overmind'
+
+// eslint-disable-next-line no-unused-vars
+const overmind = createOvermind(config)
+
+function App () {
   return (
     <div className="App">
       <header className="App-header">
@@ -19,7 +26,7 @@ function App() {
         </a>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
