@@ -1,39 +1,43 @@
 // Import dependencies
+import axios from 'axios'
 import { setupCache } from 'axios-cache-adapter'
 
 export const api = (() => {
-  let axios
   const baseUrl = 'https://pokeapi.co/api/v2'
-
+  const cache = setupCache({
+    maxAge: 15 * 60 * 1000
+  })
+  const caxios = axios.create({
+    adapter: cache.adapter
+  })
   return {
-    initialize () {
-      const cache = setupCache({
-        maxAge: 15 * 60 * 1000
-      })
-      axios = axios.create({
-        adapter: cache.adapter
-      })
-    },
-    async getPokemons (index, offset = 20) {
-      const ret = await axios({
-        url: `${baseUrl}/pokemon?offset=${index}&limit=${offset}`,
+    async getInitialPokemons () {
+      const ret = await caxios({
+        url: `${baseUrl}/pokemon?offset=0&limit=10`,
         method: 'get'
       })
-      return JSON.parse(ret.data)
+      return ret.data
+    },
+    async getPokemons (url) {
+      const ret = await caxios({
+        url,
+        method: 'get'
+      })
+      return ret.data
     },
     async getPokemon (id) {
-      const ret = await axios({
+      const ret = await caxios({
         url: `${baseUrl}/pokemon/${id}/`,
         method: 'get'
       })
-      return JSON.parse(ret.data)
+      return ret.data
     },
     async getEvolution (id) {
-      const ret = await axios({
+      const ret = await caxios({
         url: `${baseUrl}/evolution-chain/${id}/`,
         method: 'get'
       })
-      return JSON.parse(ret.data)
+      return ret.data
     }
   }
 })()

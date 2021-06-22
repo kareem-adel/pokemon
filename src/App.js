@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { createOvermind } from 'overmind'
 import { Provider } from 'overmind-react'
 import { config } from './overmind'
@@ -12,9 +12,15 @@ const overmind = createOvermind(config)
 function App () {
   return (
     <Provider value={overmind}>
-      <Router className="App">
-        <Route exact path="/" component={Home} />
-        <Route path="/:id" component={Detail} />
+      <Router>
+        <Switch>
+          <Route path="/" exact >
+            <Home />
+          </Route>
+          <Route path="/:id" >
+            <div><Home /><Detail></Detail></div>
+          </Route>
+        </Switch>
       </Router>
     </Provider>
   )
