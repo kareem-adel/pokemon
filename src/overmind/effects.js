@@ -3,6 +3,7 @@ import { setupCache } from 'axios-cache-adapter'
 
 export const api = (() => {
   let axios
+  const baseUrl = 'https://pokeapi.co/api/v2'
 
   return {
     initialize () {
@@ -13,13 +14,26 @@ export const api = (() => {
         adapter: cache.adapter
       })
     },
-    async getItems () {
+    async getPokemons (index, offset = 20) {
       const ret = await axios({
-        url: 'http://localhost/3000',
+        url: `${baseUrl}/pokemon?offset=${index}&limit=${offset}`,
         method: 'get'
       })
-
-      return ret.data
+      return JSON.parse(ret.data)
+    },
+    async getPokemon (id) {
+      const ret = await axios({
+        url: `${baseUrl}/pokemon/${id}/`,
+        method: 'get'
+      })
+      return JSON.parse(ret.data)
+    },
+    async getEvolution (id) {
+      const ret = await axios({
+        url: `${baseUrl}/evolution-chain/${id}/`,
+        method: 'get'
+      })
+      return JSON.parse(ret.data)
     }
   }
 })()
