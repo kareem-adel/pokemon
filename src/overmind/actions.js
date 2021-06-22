@@ -20,6 +20,11 @@ export const getPokemons = async ({ state, effects, actions }, url) => {
     state.loadingPokemons = false
   }
 }
+
+export const clearPokemon = async ({ state, effects, actions }) => {
+  state.selectedPokemon = {}
+}
+
 export const getPokemon = async ({ state, effects, actions }, id) => {
   state.selectedPokemon = await effects.api.getPokemon(id)
   console.log({ selectedPokemon: state.selectedPokemon })

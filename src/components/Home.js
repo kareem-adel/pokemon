@@ -81,6 +81,11 @@ function Home () {
                 onMouseOver={async () => {
                   await actions.preFetchPokemon(id)
                 }}
+                /*
+                onClick={() => {
+                  actions.clearPokemon()
+                }}
+                */
                 to={`/${id}`}
               >{`${id} ${pokemon.name}`}</Link>
             </div>
