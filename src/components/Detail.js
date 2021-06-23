@@ -34,21 +34,29 @@ export default function Detail () {
         display: 'flex',
         alignContent: 'center',
         margin: 'auto',
-        alignItems: 'center',
         paddingBottom: 16,
         paddingTop: 16
-
       }}
     >
-      <LazyLoadImage
-        style={{ alignSelf: 'center' }}
-        height={96}
-        width={96}
-        src={state.selectedPokemon?.sprites?.front_default}
-        placeholderSrc={'https://via.placeholder.com/96X96.png?text=Avatar'}
-      />
+      <div style={{ alignSelf: 'center' }}>
+        <LazyLoadImage
+          style={{ alignSelf: 'center' }}
+          height={96}
+          width={96}
+          src={state.selectedPokemon?.sprites?.front_default}
+          placeholderSrc={'https://via.placeholder.com/96X96.png?text=Avatar'}
+        />
+      </div>
 
-      <div style={{ flexDirection: 'column', display: 'flex', alignItems: 'center', marginBottom: 16 }}>
+      <div
+        style={{
+          alignSelf: 'center',
+          flexDirection: 'column',
+          display: 'flex',
+          alignItems: 'center',
+          marginBottom: 16
+        }}
+      >
         <h1>{state.selectedPokemon?.name}</h1>
 
         {(() => {
@@ -62,42 +70,48 @@ export default function Detail () {
             default:
               return (
                 !!state.selectedPokemon?.evolution.chain?.evolves_to[0]?.species
-                  ?.name &&
-                <h4>{`Evolves to ${state.selectedPokemon?.evolution?.chain?.evolves_to[0]?.species?.name}`}</h4>
+                  ?.name && (
+                  <h4>{`Evolves to ${state.selectedPokemon?.evolution?.chain?.evolves_to[0]?.species?.name}`}</h4>
+                )
               )
           }
         })()}
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-
-      {!!state.selectedPokemon?.stats && (
-        <Card style={{ width: '18rem', marginBottom: 16 }}>
-          <Card.Header>Stats</Card.Header>
-          <ListGroup variant="flush">
-            {state.selectedPokemon?.stats?.map((stat, index) => {
-              return (
-                <ListGroup.Item
-                  key={index}
-                >{`${stat.stat?.name} (base ${stat.base_stat}) (effort ${stat.effort})`}</ListGroup.Item>
-              )
-            })}
-          </ListGroup>
-        </Card>
-      )}
-      {!!state.selectedPokemon?.types && (
-        <Card style={{ width: '18rem' }}>
-          <Card.Header>Types</Card.Header>
-          <ListGroup variant="flush">
-            {state.selectedPokemon?.types?.map((type, index) => {
-              return (
-                <ListGroup.Item
-                  key={index}
-                >{`${type.type?.name} (slot ${type.slot})`}</ListGroup.Item>
-              )
-            })}
-          </ListGroup>
-        </Card>
-      )}
+      <div
+        style={{
+          alignSelf: 'center',
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        {!!state.selectedPokemon?.stats && (
+          <Card style={{ width: '18rem', marginBottom: 16 }}>
+            <Card.Header>Stats</Card.Header>
+            <ListGroup variant="flush">
+              {state.selectedPokemon?.stats?.map((stat, index) => {
+                return (
+                  <ListGroup.Item
+                    key={index}
+                  >{`${stat.stat?.name} (base ${stat.base_stat}) (effort ${stat.effort})`}</ListGroup.Item>
+                )
+              })}
+            </ListGroup>
+          </Card>
+        )}
+        {!!state.selectedPokemon?.types && (
+          <Card style={{ width: '18rem' }}>
+            <Card.Header>Types</Card.Header>
+            <ListGroup variant="flush">
+              {state.selectedPokemon?.types?.map((type, index) => {
+                return (
+                  <ListGroup.Item
+                    key={index}
+                  >{`${type.type?.name} (slot ${type.slot})`}</ListGroup.Item>
+                )
+              })}
+            </ListGroup>
+          </Card>
+        )}
       </div>
     </div>
   )
