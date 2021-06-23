@@ -32,15 +32,12 @@ export default function Detail () {
         overflow: 'auto',
         flexDirection: 'column',
         display: 'flex',
-        alignContent: 'center',
         margin: 'auto',
-        paddingBottom: 16,
-        paddingTop: 16
+        padding: 16
       }}
     >
-      <div style={{ alignSelf: 'center' }}>
+      <div style={{ alignSelf: 'center', flexDirection: 'column', display: 'flex' }}>
         <LazyLoadImage
-          style={{ alignSelf: 'center' }}
           height={96}
           width={96}
           src={state.selectedPokemon?.sprites?.front_default}
@@ -71,7 +68,7 @@ export default function Detail () {
               return (
                 !!state.selectedPokemon?.evolution.chain?.evolves_to[0]?.species
                   ?.name && (
-                  <h4>{`Evolves to ${state.selectedPokemon?.evolution?.chain?.evolves_to[0]?.species?.name}`}</h4>
+                  <h4 style={{ textAlign: 'center' }}>{`Evolves to ${state.selectedPokemon?.evolution?.chain?.evolves_to[0]?.species?.name}`}</h4>
                 )
               )
           }
@@ -79,13 +76,14 @@ export default function Detail () {
       </div>
       <div
         style={{
-          alignSelf: 'center',
           display: 'flex',
-          flexDirection: 'column'
+          flexDirection: 'column',
+          marginLeft: 'auto',
+          marginRight: 'auto'
         }}
       >
         {!!state.selectedPokemon?.stats && (
-          <Card style={{ width: '18rem', marginBottom: 16 }}>
+          <Card style={{ marginBottom: 16 }}>
             <Card.Header>Stats</Card.Header>
             <ListGroup variant="flush">
               {state.selectedPokemon?.stats?.map((stat, index) => {
@@ -99,7 +97,7 @@ export default function Detail () {
           </Card>
         )}
         {!!state.selectedPokemon?.types && (
-          <Card style={{ width: '18rem' }}>
+          <Card >
             <Card.Header>Types</Card.Header>
             <ListGroup variant="flush">
               {state.selectedPokemon?.types?.map((type, index) => {

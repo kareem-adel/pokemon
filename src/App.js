@@ -22,12 +22,12 @@ function App () {
             <div style={{ flexDirection: 'row', display: 'flex' }}>
               <div
                 style={{
-                  width: '40%'
+                  width: '35%'
                 }}
               >
                 <Home></Home>
               </div>
-              <div style={{ width: '60%' }}>
+              <div style={{ width: '65%' }}>
                 <Detail></Detail>
               </div>
             </div>
