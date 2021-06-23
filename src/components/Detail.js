@@ -33,8 +33,8 @@ export default function Detail () {
         flexDirection: 'column',
         display: 'flex',
         alignContent: 'center',
+        margin: 'auto',
         alignItems: 'center',
-        justifyContent: 'center',
         paddingBottom: 16,
         paddingTop: 16
 
