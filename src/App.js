@@ -6,6 +6,7 @@ import { Provider } from 'overmind-react'
 import { config } from './overmind'
 import Home from './components/Home'
 import Detail from './components/Detail'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const overmind = createOvermind(config)
 

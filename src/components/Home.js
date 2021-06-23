@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 // eslint-disable-next-line no-unused-vars
 import { useState, useActions, useEffects, useReaction } from '../overmind'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { Ripple } from 'react-spinners-css'
+import ListGroup from 'react-bootstrap/ListGroup'
 
 function Home () {
   const state = useState()
@@ -65,32 +67,33 @@ function Home () {
           await actions.getPokemons(state.currentRetrievedPokemons.next)
         }}
         hasMore={!!state.currentRetrievedPokemons?.next}
-        loader={<h4>Loading...</h4>}
+        loader={<Ripple color="blue" size={30} />}
         endMessage={
           <p style={{ textAlign: 'center' }}>
             <b>{"That's all !"}</b>
           </p>
         }
       >
-        {state.pokemons?.map((pokemon) => {
-          const url = pokemon.url.split('/')
-          const id = url[url.length - 2]
-          return (
-            <div key={id}>
-              <Link
-                onMouseOver={async () => {
-                  await actions.preFetchPokemon(id)
-                }}
-                /*
-                onClick={() => {
-                  actions.clearPokemon()
-                }}
-                */
-                to={`/${id}`}
-              >{`${id} ${pokemon.name}`}</Link>
-            </div>
-          )
-        })}
+        <ListGroup>
+          {state.pokemons?.map((pokemon) => {
+            const url = pokemon.url.split('/')
+            const id = url[url.length - 2]
+            return (
+              <ListGroup.Item key={id} style={{ textAlign: 'center' }}>
+                <Link
+                  style={{ textDecoration: 'none' }}
+                  onMouseOver={async () => {
+                    await actions.preFetchPokemon(id)
+                  }}
+                  to={`/${id}`}
+                >
+                  <div>{`${id}`}</div>
+                  <h5>{`${pokemon.name}`}</h5>
+                </Link>
+              </ListGroup.Item>
+            )
+          })}
+        </ListGroup>
       </InfiniteScroll>
     </div>
   )

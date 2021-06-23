@@ -2,6 +2,10 @@ import React, { useEffect, useState as reactUseState } from 'react'
 import { useParams } from 'react-router-dom'
 // eslint-disable-next-line no-unused-vars
 import { useState, useActions, useEffects, useReaction } from '../overmind'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { Ripple } from 'react-spinners-css'
+import Card from 'react-bootstrap/Card'
+import ListGroup from 'react-bootstrap/ListGroup'
 
 export default function Detail () {
   const actions = useActions()
@@ -15,62 +19,84 @@ export default function Detail () {
     window.addEventListener('resize', handleResize, {
       passive: true
     })
+    actions.clearPokemon()
     await actions.getPokemon(id)
     return () => {
       window.removeEventListener('resize', handleResize)
     }
   }, [id])
   return (
-    <div style={{ height: windowHeight, overflow: 'auto' }}>
-      <img src={state.selectedPokemon?.sprites?.front_default} />
-      <h1>{state.selectedPokemon?.name}</h1>
-      {state.selectedPokemon?.types?.map((type, index) => {
-        return (
-          <div key={index}>
-            <div style={{ flexDirection: 'row', display: 'flex' }}>
-              <div style={{ marginRight: 8 }}>{'Slot'}</div>
-              <div>{type.slot}</div>
-            </div>
-            <div style={{ flexDirection: 'row', display: 'flex' }}>
-              <div style={{ marginRight: 8 }}>{'Name'}</div>
-              <div>{type.type?.name}</div>
-            </div>
-          </div>
-        )
-      })}
-      {state.selectedPokemon?.stats?.map((type, index) => {
-        return (
-          <div key={index}>
-            <div style={{ flexDirection: 'row', display: 'flex' }}>
-              <div style={{ marginRight: 8 }}>{'Name'}</div>
-              <div>{type.stat?.name}</div>
-            </div>
-            <div style={{ flexDirection: 'row', display: 'flex' }}>
-              <div style={{ marginRight: 8 }}>{'base_stat'}</div>
-              <div>{type.base_stat}</div>
-            </div>
-            <div style={{ flexDirection: 'row', display: 'flex' }}>
-              <div style={{ marginRight: 8 }}>{'effort'}</div>
-              <div>{type.effort}</div>
-            </div>
-          </div>
-        )
-      })}
-      {!!state.selectedPokemon?.evolution?.chain?.evolves_to[0]?.species
-        ?.name && (
-        <div>
-          <div style={{ flexDirection: 'row', display: 'flex' }}>
-            <div style={{ marginRight: 8 }}>{'Evolution'}</div>
-            <div>
-              {
-                state.selectedPokemon?.evolution?.chain?.evolves_to[0]?.species
-                  ?.name
-              }
-            </div>
-          </div>
-        </div>
+    <div
+      style={{
+        height: windowHeight,
+        overflow: 'auto',
+        flexDirection: 'column',
+        display: 'flex',
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingBottom: 16
+      }}
+    >
+      <LazyLoadImage
+        style={{ alignSelf: 'center' }}
+        height={96}
+        width={96}
+        src={state.selectedPokemon?.sprites?.front_default}
+        placeholderSrc={'https://via.placeholder.com/96X96.png?text=Avatar'}
+      />
+
+      <div style={{ flexDirection: 'column', display: 'flex', alignItems: 'center', marginBottom: 16 }}>
+        <h1>{state.selectedPokemon?.name}</h1>
+
+        {(() => {
+          switch (state.selectedPokemon?.evolution) {
+            case undefined:
+              return (
+                <div>
+                  <Ripple color="blue" size={16} />
+                </div>
+              )
+            default:
+              return (
+                !!state.selectedPokemon?.evolution.chain?.evolves_to[0]?.species
+                  ?.name &&
+                <h4>{`Evolves to ${state.selectedPokemon?.evolution?.chain?.evolves_to[0]?.species?.name}`}</h4>
+              )
+          }
+        })()}
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+
+      {!!state.selectedPokemon?.stats && (
+        <Card style={{ width: '18rem', marginRight: 16 }}>
+          <Card.Header>Stats</Card.Header>
+          <ListGroup variant="flush">
+            {state.selectedPokemon?.stats?.map((stat, index) => {
+              return (
+                <ListGroup.Item
+                  key={index}
+                >{`${stat.stat?.name} (base ${stat.base_stat}) (effort ${stat.effort})`}</ListGroup.Item>
+              )
+            })}
+          </ListGroup>
+        </Card>
       )}
+      {!!state.selectedPokemon?.types && (
+        <Card style={{ width: '18rem' }}>
+          <Card.Header>Types</Card.Header>
+          <ListGroup variant="flush">
+            {state.selectedPokemon?.types?.map((type, index) => {
+              return (
+                <ListGroup.Item
+                  key={index}
+                >{`${type.type?.name} (slot ${type.slot})`}</ListGroup.Item>
+              )
+            })}
+          </ListGroup>
+        </Card>
+      )}
+      </div>
     </div>
   )
 }
-/* <div><div>{JSON.stringify(state.selectedPokemon?.evolution)}</div>{JSON.stringify(state.selectedPokemon)}</div> */
