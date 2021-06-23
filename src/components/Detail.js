@@ -35,7 +35,9 @@ export default function Detail () {
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingBottom: 16
+        paddingBottom: 16,
+        paddingTop: 16
+
       }}
     >
       <LazyLoadImage
@@ -66,10 +68,10 @@ export default function Detail () {
           }
         })()}
       </div>
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
 
       {!!state.selectedPokemon?.stats && (
-        <Card style={{ width: '18rem', marginRight: 16 }}>
+        <Card style={{ width: '18rem', marginBottom: 16 }}>
           <Card.Header>Stats</Card.Header>
           <ListGroup variant="flush">
             {state.selectedPokemon?.stats?.map((stat, index) => {

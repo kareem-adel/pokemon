@@ -36,6 +36,8 @@ export const api = (() => {
       const ret = await caxios({
         url: `${baseUrl}/evolution-chain/${id}/`,
         method: 'get'
+      }).catch(() => {
+        return false
       })
       return ret.data
     }
